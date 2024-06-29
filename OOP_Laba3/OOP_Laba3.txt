@@ -1,0 +1,67 @@
+#include<iostream>
+#include<string>
+#include<Windows.h>
+using namespace std;
+
+class Vehicle
+{
+protected:
+	const int id;
+	static int count;
+public:
+	
+	Vehicle() : id(++count) {};
+	virtual ~Vehicle() {};
+};
+
+int Vehicle::count = 0;
+
+class Car : public Vehicle
+{
+protected:
+	string brand;
+	int cylinders;
+	int power;
+
+public:
+	Car(string name = "Car brand", int engine = 0, int power_val = 0) : brand(name), cylinders(engine), power(power_val) {};
+
+	int getID() { return id; };
+	void Display()
+	{
+		cout << "Марка: " << brand << "\tКоличество цилиндров: " << cylinders << "\tМощность: " << power << " лошадиных сил";
+	}
+};
+
+class Truck : public Car
+{
+private:
+	int cargoCapacity;
+public:
+	Truck(int capacity) : cargoCapacity(capacity) {};
+	Truck(string name = "Truck brand", int engine = 0, int power_val = 0, int capacity = 0) : Car(name, engine, power_val), cargoCapacity(capacity) {};
+
+	void Display()
+	{
+		Car::Display();
+		cout << "\tГрузоподьемность: " << cargoCapacity;
+	}
+
+};
+
+int main()
+{
+	SetConsoleOutputCP(1251);
+	SetConsoleCP(1251);
+	setlocale(LC_ALL, "RUS");
+	Car BMW("BMW", 12, 500);
+	Truck Harvester;
+	Truck BELAZ("BELAZ", 16, 2000, 450);
+
+	cout << "Vehicles IDs:\n" << BMW.getID() <<endl <<Harvester.getID()<<endl <<BELAZ.getID()<<endl;
+
+	BMW.Display();		cout << endl;
+	BELAZ.Display();	cout << endl;
+	Harvester.Display(); cout << endl;
+	return 0;
+}
